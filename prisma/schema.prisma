@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id       String  @id @default(uuid())
+  isAdmin  Boolean @default(false) @map("is_admin")
+  name     String  @db.VarChar(180)
+  email    String  @unique @db.VarChar(180)
+  password String  @db.Text
+
+  createdAt DateTime? @default(now()) @map("created_at") @db.Date
+  updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp()
+
+  Address Address[]
+
+  @@map("users")
+}
+
+model Address {
+  id         String  @id @default(uuid())
+  usersId    String? @map("users_id")
+  address    String  @db.VarChar(180)
+  zipCode    String  @map("zip_code") @db.VarChar(80)
+  complement String  @db.VarChar(180)
+  city       String  @db.VarChar(80)
+  district   String  @db.VarChar(100)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Date
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp()
+
+  Users Users? @relation(fields: [usersId], references: [id])
+
+  @@map("address")
+}
+
+model AvailableLocations {
+  id      String @id @default(uuid())
+  zipCode String @unique @map("zip_code") @db.VarChar(80)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Date
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp()
+
+  @@map("available_locations")
+}
+
+model Products {
+  id          String @id @default(uuid())
+  name        String @db.VarChar(180)
+  description String @db.VarChar(180)
+  value       Float  @default(0.01)
+  discount    Float  @default(0.00)
+
+  createdAt DateTime? @default(now()) @map("created_at") @db.Date
+  updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp()
+
+  @@map("products")
+}
+
+model PurchaseOrder {
+  id            String   @id @default(uuid())
+  usersId       String   @map("users_id") @db.VarChar(80)
+  status        Int      @default(0)
+  purchaseDate  DateTime @map("purchase_date") @db.Date
+  purchaseTotal Float    @default(0.00) @map("purchase_total")
+
+  createdAt DateTime? @default(now()) @map("created_at") @db.Date
+  updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp()
+
+  PurchaseItems PurchaseItems[]
+  @@map("purchase_order")
+}
+
+model PurchaseItems {
+  id              String @id @default(uuid())
+  purchaseOrderId String @map("purchase_order_id")
+  productId       String @map("product_id") @db.VarChar(80)
+  numberOfItems   Float  @default(0) @map("number_of_items")
+  unitaryValue    Float  @default(0.00) @map("unitary_value")
+  amount          Float  @default(0.00)
+
+  createdAt DateTime? @default(now()) @map("created_at") @db.Date
+  updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp()
+
+  purchaseOrder PurchaseOrder @relation(fields: [purchaseOrderId], references: [id])
+
+  @@map("purchase_items")
+}
