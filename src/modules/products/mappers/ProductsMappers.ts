@@ -39,6 +39,7 @@ export class ProductsMappers {
 
   static toDto(raw: Products): ProductsPropsDTOs {
     return {
+      id: raw.id,
       name: raw.name.value,
       description: raw.description.value,
       value: raw.value.value,
