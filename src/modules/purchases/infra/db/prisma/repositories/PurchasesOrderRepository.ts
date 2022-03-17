@@ -4,6 +4,7 @@ import { PurchasesOrderMappers } from "@/modules/purchases/mappers/PurchasesOrde
 import { IPurchasesRepository } from "@/modules/purchases/repositories/IPurchasesRepository";
 import { PurchaseItems } from "@/modules/purchases/domain/entities/purchaseItems/purchaseItems";
 import { PurchasesItemsMappers } from "@/modules/purchases/mappers/PurchasesItemsMappers";
+import { PurchaseAndItemsDTOs } from "@/modules/purchases/dtos/PurchaseOrderAndItemsDTOs";
 
 export class PurchasesOrderRepository implements IPurchasesRepository {
   async create(purchaseOrder: PurchaseOrder): Promise<void> {
@@ -21,5 +22,43 @@ export class PurchasesOrderRepository implements IPurchasesRepository {
     const data = PurchasesItemsMappers.toPersistence(purchaseItems);
 
     await prisma.purchaseItems.create({ data });
+  }
+
+  async findOne(id: string): Promise<PurchaseAndItemsDTOs> {
+    const purchase = await prisma.purchaseOrder.findUnique({
+      where: { id },
+      include: {
+        PurchaseItems: {
+          select: {
+            productId: true,
+            amount: true,
+            numberOfItems: true,
+            unitaryValue: true,
+          },
+        },
+      },
+    });
+
+    return PurchasesOrderMappers.toPurchaseAndItemsDto(purchase);
+  }
+
+  async findMany(): Promise<PurchaseAndItemsDTOs[]> {
+    const purchase = await prisma.purchaseOrder.findMany({
+      include: {
+        PurchaseItems: {
+          select: {
+            productId: true,
+            amount: true,
+            numberOfItems: true,
+            unitaryValue: true,
+          },
+        },
+      },
+    });
+    console.log(purchase)
+
+    return purchase.map((purchase) =>
+      PurchasesOrderMappers.toPurchaseAndItemsDto(purchase)
+    );
   }
 }
