@@ -1,5 +1,10 @@
 import { Controller } from "@/core/infra/Controller";
-import { clientError, fail, HttpResponse, ok } from "@/core/infra/HttpResponse";
+import {
+  clientError,
+  created,
+  fail,
+  HttpResponse,
+} from "@/core/infra/HttpResponse";
 import { AddAddressInUsersAlreadyRegistered } from "./AddAddressInUsersAlreadyRegistered";
 
 type AddAddressInUsersAlreadyRegisteredControllerRequest = {
@@ -42,7 +47,7 @@ export class AddAddressInUsersAlreadyRegisteredController
         }
       }
 
-      return ok(result.value);
+      return created(result.value);
     } catch (err) {
       return fail(err);
     }
