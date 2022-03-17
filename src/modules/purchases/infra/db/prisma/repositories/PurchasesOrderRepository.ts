@@ -12,6 +12,11 @@ export class PurchasesOrderRepository implements IPurchasesRepository {
     await prisma.purchaseOrder.create({ data });
   }
 
+  async delete(id: string): Promise<void> {
+    await prisma.purchaseOrder.delete({ where: { id } });
+    await prisma.purchaseItems.deleteMany({ where: { purchaseOrderId: id } });
+  }
+
   async addItems(purchaseItems: PurchaseItems): Promise<void> {
     const data = PurchasesItemsMappers.toPersistence(purchaseItems);
 

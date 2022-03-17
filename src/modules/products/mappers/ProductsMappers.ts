@@ -23,12 +23,15 @@ export class ProductsMappers {
       throw valueOrError.value;
     }
 
-    const productsOrError = Products.create({
-      name: nameOrError.value,
-      description: descriptionOrError.value,
-      value: valueOrError.value,
-      discount: raw.discount,
-    });
+    const productsOrError = Products.create(
+      {
+        name: nameOrError.value,
+        description: descriptionOrError.value,
+        value: valueOrError.value,
+        discount: raw.discount,
+      },
+      raw.id
+    );
 
     if (productsOrError.isLeft()) {
       return null;

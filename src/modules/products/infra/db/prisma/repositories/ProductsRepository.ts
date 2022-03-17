@@ -22,4 +22,10 @@ export class ProductsRepository implements IProductsRepository {
 
     return products.map((product) => ProductsMappers.toDomain(product));
   }
+
+  async exists(id: string): Promise<boolean> {
+    const productExists = await prisma.products.findUnique({ where: { id } });
+
+    return !!productExists;
+  }
 }
