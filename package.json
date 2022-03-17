@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "server":"ts-node-dev --respawn --transpile-only --ignore-watch node_modules --exit-child --clear -r tsconfig-paths/register src/shared/infra/http/server.ts",
-    "seed:prisma":"ts-node-dev -r tsconfig-paths/register src/shared/infra/db/prisma/seeds.ts"
+    "seed:prisma":"ts-node-dev -r tsconfig-paths/register src/shared/infra/db/prisma/seeds.ts",
+    "build": "babel src --extensions \".ts\" --out-dir dist --copy-files"
   },
   "devDependencies": {
     "@babel/cli": "7.14.8",
