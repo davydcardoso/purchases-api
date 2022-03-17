@@ -4,10 +4,12 @@ import { UsersMappers } from "@/modules/users/mappers/UsersMappers";
 import { IUsersRepository } from "@/modules/users/repositories/IUsersRepository";
 
 export class UsersRepository implements IUsersRepository {
-  async create(user: Users): Promise<void> {
+  async create(user: Users): Promise<string> {
     const data = await UsersMappers.toPersistence(user);
 
-    await prisma.users.create({ data });
+    const usersCreated = await prisma.users.create({ data });
+
+    return usersCreated.id;
   }
 
   async delete(id: string): Promise<void> {

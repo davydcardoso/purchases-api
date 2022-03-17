@@ -24,7 +24,7 @@ type CreateNewUsersAccountResponse = Either<
 >;
 
 type CreateNewUsersAccountResponseProps = {
-  data?: Users;
+  userId: string;
 };
 
 export class CreateNewUsersAccount {
@@ -72,7 +72,8 @@ export class CreateNewUsersAccount {
       return left(new AccountAlreadyExistsError(users.email.value));
     }
 
-    await this.usersRepository.create(users);
-    return right({ data: users });
+    const userId = await this.usersRepository.create(users);
+    
+    return right({ userId });
   }
 }
