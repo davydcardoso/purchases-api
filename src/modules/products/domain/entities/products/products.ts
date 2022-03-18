@@ -12,6 +12,7 @@ type ProductsProps = {
   description: Description;
   value: Value;
   discount: number;
+  image?: string;
 };
 
 export class Products extends Entity<ProductsProps> {
@@ -29,6 +30,10 @@ export class Products extends Entity<ProductsProps> {
 
   get discount() {
     return this.props.discount;
+  }
+
+  get image() {
+    return this.props.image;
   }
 
   private constructor(props: ProductsProps, id?: string) {

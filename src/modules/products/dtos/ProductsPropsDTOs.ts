@@ -4,4 +4,5 @@ export type ProductsPropsDTOs = {
   description: string;
   value: number;
   discount: number;
+  image?: string;
 };

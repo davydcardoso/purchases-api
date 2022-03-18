@@ -50,11 +50,12 @@ model AvailableLocations {
 }
 
 model Products {
-  id          String @id @default(uuid())
-  name        String @db.VarChar(180)
-  description String @db.VarChar(180)
-  value       Float  @default(0.01)
-  discount    Float  @default(0.00)
+  id          String  @id @default(uuid())
+  name        String  @db.VarChar(180)
+  description String  @db.VarChar(180)
+  value       Float   @default(0.01)
+  discount    Float   @default(0.00)
+  image       String? @db.Text
 
   createdAt DateTime? @default(now()) @map("created_at") @db.Date
   updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp()

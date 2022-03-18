@@ -29,6 +29,7 @@ export class ProductsMappers {
         description: descriptionOrError.value,
         value: valueOrError.value,
         discount: raw.discount,
+        image: raw.image,
       },
       raw.id
     );
@@ -47,6 +48,7 @@ export class ProductsMappers {
       description: raw.description.value,
       value: raw.value.value,
       discount: raw.discount,
+      image: raw.image,
     };
   }
 }
