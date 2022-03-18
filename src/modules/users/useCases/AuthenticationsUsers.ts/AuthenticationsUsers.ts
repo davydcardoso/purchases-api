@@ -18,6 +18,7 @@ type AuthenticationsUsersResponseProps = {
   token: string;
   user: {
     id: string;
+    isAdmin: boolean;
     name: string;
   };
 };
@@ -47,6 +48,7 @@ export class AuthenticationsUsers {
       token,
       user: {
         id: user.id,
+        isAdmin: user.isAdmin,
         name: user.name.value,
       },
     });
