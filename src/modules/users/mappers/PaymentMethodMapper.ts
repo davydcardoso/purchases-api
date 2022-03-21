@@ -11,6 +11,7 @@ export class PaymentMethodMapper {
       type: raw.type.value,
       cardNumber: raw.cardNumber.value,
       cardValidate: raw.cardValidate,
+      isDefault: raw.isDefault,
     };
   }
 

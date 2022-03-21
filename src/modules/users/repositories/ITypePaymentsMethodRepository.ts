@@ -5,4 +5,5 @@ export interface ITypePaymentsMethodRepository {
   exists(userId: string, type: string): Promise<boolean>;
   create(paymentsMethod: PaymentsMethod): Promise<void>;
   findMany(userId: string): Promise<PaymentsMethosDTOs[]>;
+  existsDefaultMethodPayment(userId: string): Promise<boolean>;
 }

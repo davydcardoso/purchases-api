@@ -30,4 +30,12 @@ export class TypePaymentsMethodRepository
       PaymentMethodMapper.toDto(payments)
     );
   }
+
+  async existsDefaultMethodPayment(userId: string): Promise<boolean> {
+    const exists = await prisma.paymentsMethod.findFirst({
+      where: { userId, isDefault: true },
+    });
+
+    return !!exists;
+  }
 }

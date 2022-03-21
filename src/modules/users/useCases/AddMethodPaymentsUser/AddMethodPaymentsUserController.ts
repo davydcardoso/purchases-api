@@ -8,8 +8,9 @@ import {
 import { AddMethodPaymentsUser } from "./AddMethodPaymentsUser";
 
 type AddMethodPaymentsUserControllerRequest = {
-  name: string;
   userId: string;
+  name: string;
+  isDefault: boolean;
   type: string;
   cardNumber: string;
   cardValidate: string;
@@ -22,7 +23,8 @@ export class AddMethodPaymentsUserController implements Controller {
     request: AddMethodPaymentsUserControllerRequest
   ): Promise<HttpResponse> {
     try {
-      const { userId, name, type, cardNumber, cardValidate } = request;
+      const { userId, name, type, cardNumber, cardValidate, isDefault } =
+        request;
 
       const result = await this.addMethodPaymentsUser.perform({
         userId,
@@ -30,6 +32,7 @@ export class AddMethodPaymentsUserController implements Controller {
         type,
         cardNumber,
         cardValidate,
+        isDefault,
       });
 
       if (result.isLeft()) {

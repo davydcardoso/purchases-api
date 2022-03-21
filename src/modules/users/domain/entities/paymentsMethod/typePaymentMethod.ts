@@ -13,6 +13,9 @@ export class TypePaymentsMethod {
   }
 
   static validate(typePayment: string): boolean {
+    const typeString = ["credit_card", "debit_card", "money", "pix"] as const;
+    type TypePayment = typeof typeString[number];
+
     if (
       !typePayment ||
       typePayment.trim().length < 5 ||
@@ -21,11 +24,18 @@ export class TypePaymentsMethod {
       return false;
     }
 
-    if (typePayment !== ("credit_card" || "debit_card" || "money" || "pix")) {
-      return false;
+    switch (typePayment as TypePayment) {
+      case "credit_card":
+        return true;
+      case "debit_card":
+        return true;
+      case "money":
+        return true;
+      case "pix":
+        return true;
+      default:
+        return false;
     }
-
-    return true;
   }
 
   static create(

@@ -8,6 +8,7 @@ import { TypePaymentsMethod } from "./typePaymentMethod";
 type PaymentsMethodProps = {
   userId: string;
   name: string;
+  isDefault: boolean;
   type: TypePaymentsMethod;
   cardNumber: CardNumber;
   cardValidate: string;
@@ -20,6 +21,10 @@ export class PaymentsMethod extends Entity<PaymentsMethodProps> {
 
   get name() {
     return this.props.name;
+  }
+
+  get isDefault() {
+    return this.props.isDefault;
   }
 
   get type() {

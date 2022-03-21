@@ -100,8 +100,9 @@ model PurchaseItems {
 
 model PaymentsMethod {
   id           String  @id @default(uuid())
-  name         String  @db.VarChar(80)
   userId       String
+  name         String  @db.VarChar(80)
+  isDefault    Boolean @default(false) @map("is_default")
   type         String  @db.VarChar(100)
   cardNumber   String? @map("card_number") @db.VarChar(4)
   cardValidate String? @map("card_validate") @db.VarChar(5)
