@@ -1,5 +1,7 @@
 import { Either, left, right } from "@/core/logic/Either";
 import { JWT } from "../../domain/entities/users/jwt";
+import { PaymentsMethosDTOs } from "../../dtos/PaymentsMethodDTOs";
+import { ITypePaymentsMethodRepository } from "../../repositories/ITypePaymentsMethodRepository";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { InvalidEmailOrPasswordError } from "./errors/InvalidEmailOrPasswordError";
 import { UserNotFoundWithThisEmailError } from "./errors/UserNotFoundWithThisEmailError";
@@ -20,11 +22,16 @@ type AuthenticationsUsersResponseProps = {
     id: string;
     isAdmin: boolean;
     name: string;
+    email: string;
+    paymentsMethods?: PaymentsMethosDTOs[];
   };
 };
 
 export class AuthenticationsUsers {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(
+    private usersRepository: IUsersRepository,
+    private paymentsRepository: ITypePaymentsMethodRepository
+  ) {}
 
   async perform({
     username,
@@ -44,12 +51,16 @@ export class AuthenticationsUsers {
 
     const { token } = JWT.signUser(user);
 
+    const paymentsMethods = await this.paymentsRepository.findMany(user.id);
+
     return right({
       token,
       user: {
         id: user.id,
         isAdmin: user.isAdmin,
         name: user.name.value,
+        email: user.email.value,
+        paymentsMethods,
       },
     });
   }
