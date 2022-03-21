@@ -21,7 +21,7 @@ type CreateNewPurchaseOrderRequest = {
 };
 
 type ProductsProps = {
-  productId: string;
+  id: string;
   numberOfItems: number;
   unitaryValue: number;
   amount: number;
@@ -72,9 +72,9 @@ export class CreateNewPurchaseOrder {
     );
 
     const purchaseItems: PurchaseItems[] = products.map(
-      ({ amount, numberOfItems, productId, unitaryValue }) => {
+      ({ amount, numberOfItems, id, unitaryValue }) => {
         const purchaseItemsOrError = PurchaseItems.create({
-          productId,
+          productId: id,
           purchaseOrderId: purchaseId,
           amount,
           numberOfItems,

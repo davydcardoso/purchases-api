@@ -21,7 +21,7 @@ type CreateNewPurchaseOrderControllerRequest = {
 };
 
 type RequestProductsProps = {
-  productId: string;
+  id: string;
   numberOfItems: number;
   unitaryValue: number;
   amount: number;
