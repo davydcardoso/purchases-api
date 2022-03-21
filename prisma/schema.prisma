@@ -17,8 +17,8 @@ model Users {
   createdAt DateTime? @default(now()) @map("created_at") @db.Date
   updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp()
 
-  Address Address[]
-
+  Address        Address[]
+  PaymentsMethod PaymentsMethod[]
   @@map("users")
 }
 
@@ -64,11 +64,16 @@ model Products {
 }
 
 model PurchaseOrder {
-  id            String   @id @default(uuid())
-  usersId       String   @map("users_id") @db.VarChar(80)
-  status        Int      @default(0)
-  purchaseDate  DateTime @map("purchase_date") @db.Date
-  purchaseTotal Float    @default(0.00) @map("purchase_total")
+  id              String   @id @default(uuid())
+  usersId         String   @map("users_id") @db.VarChar(80)
+  status          Int      @default(0)
+  purchaseDate    DateTime @map("purchase_date") @db.Date
+  purchaseTotal   Float    @default(0.00) @map("purchase_total")
+  fullName        String   @map("full_name") @db.VarChar(180)
+  phoneNumber     String   @map("phone_number") @db.VarChar(180)
+  paymentMethod   String   @map("payment_method") @db.VarChar(80)
+  promotionalCode String?  @map("promotional_code") @db.VarChar(80)
+  orderComments   String?  @db.Text
 
   createdAt DateTime? @default(now()) @map("created_at") @db.Date
   updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp()
@@ -91,4 +96,20 @@ model PurchaseItems {
   purchaseOrder PurchaseOrder @relation(fields: [purchaseOrderId], references: [id])
 
   @@map("purchase_items")
+}
+
+model PaymentsMethod {
+  id           String  @id @default(uuid())
+  name         String  @db.VarChar(80)
+  userId       String
+  type         String  @db.VarChar(100)
+  cardNumber   String? @map("card_number") @db.VarChar(4)
+  cardValidate String? @map("card_validate") @db.VarChar(5)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Date
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp()
+
+  users Users @relation(fields: [userId], references: [id])
+
+  @@map("payments_method")
 }

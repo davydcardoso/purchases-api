@@ -6,6 +6,11 @@ type PurchaseOrderProps = {
   status: number;
   purchaseDate: Date;
   purchaseTotal: number;
+  fullName: string;
+  phoneNumber: string;
+  paymentMethod: string;
+  promotionalCode: string;
+  orderComments: string;
 };
 
 export class PurchaseOrder extends Entity<PurchaseOrderProps> {
@@ -23,6 +28,26 @@ export class PurchaseOrder extends Entity<PurchaseOrderProps> {
 
   get purchaseTotal() {
     return this.props.purchaseTotal;
+  }
+
+  get fullName() {
+    return this.props.fullName;
+  }
+
+  get phoneNumber() {
+    return this.props.phoneNumber;
+  }
+
+  get paymentMethod() {
+    return this.props.paymentMethod;
+  }
+
+  get promotionalCode() {
+    return this.props.promotionalCode;
+  }
+
+  get orderComments() {
+    return this.props.orderComments;
   }
 
   private constructor(props: PurchaseOrderProps, id?: string) {

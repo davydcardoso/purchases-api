@@ -11,6 +11,12 @@ type CreateNewPurchaseOrderControllerRequest = {
   userId: string;
   purchaseDate: Date;
   purchaseTotal: number;
+  fullName: string;
+  phoneNumber: string;
+  email: string;
+  paymentMethod: string;
+  promotionalCode?: string;
+  orderComments?: string;
   products: RequestProductsProps[];
 };
 
@@ -28,13 +34,32 @@ export class CreateNewPurchaseOrderController implements Controller {
     request: CreateNewPurchaseOrderControllerRequest
   ): Promise<HttpResponse> {
     try {
-      const { userId, purchaseDate, purchaseTotal, products } = request;
+      const {
+        userId,
+        purchaseDate,
+        purchaseTotal,
+        products,
+        fullName,
+        phoneNumber,
+        email,
+        paymentMethod,
+        promotionalCode,
+        orderComments,
+      } = request;
+
+      console.log(request);
 
       const result = await this.createNewPurchaseOrder.perform({
         userId,
         purchaseDate,
         purchaseTotal,
         products,
+        fullName,
+        phoneNumber,
+        email,
+        paymentMethod,
+        promotionalCode,
+        orderComments,
       });
 
       if (result.isLeft()) {

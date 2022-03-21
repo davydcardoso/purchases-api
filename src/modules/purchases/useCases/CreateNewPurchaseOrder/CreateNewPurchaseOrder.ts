@@ -11,6 +11,12 @@ type CreateNewPurchaseOrderRequest = {
   userId: string;
   purchaseDate: Date;
   purchaseTotal: number;
+  fullName: string;
+  phoneNumber: string;
+  email: string;
+  paymentMethod: string;
+  promotionalCode?: string;
+  orderComments?: string;
   products: ProductsProps[];
 };
 
@@ -40,6 +46,12 @@ export class CreateNewPurchaseOrder {
     userId,
     purchaseDate,
     purchaseTotal,
+    fullName,
+    phoneNumber,
+    email,
+    paymentMethod,
+    promotionalCode,
+    orderComments,
     products,
   }: CreateNewPurchaseOrderRequest): Promise<CreateNewPurchaseOrderResponse> {
     const purchaseId: string = randomUUID();
@@ -48,8 +60,13 @@ export class CreateNewPurchaseOrder {
       {
         usersId: userId,
         status: 0,
-        purchaseDate: new Date(purchaseDate),
+        fullName,
+        orderComments,
+        paymentMethod,
+        phoneNumber,
+        promotionalCode,
         purchaseTotal: purchaseTotal,
+        purchaseDate: new Date(purchaseDate),
       },
       purchaseId
     );

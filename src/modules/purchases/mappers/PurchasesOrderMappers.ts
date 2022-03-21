@@ -19,6 +19,11 @@ export class PurchasesOrderMappers {
       status: raw.status,
       purchaseDate: raw.purcheaseDate,
       purchaseTotal: raw.purchaseTotal,
+      fullName: raw.fullName,
+      orderComments: raw.orderComments,
+      paymentMethod: raw.paymentMethod,
+      phoneNumber: raw.phoneNumber,
+      promotionalCode: raw.promotionalCode,
     };
   }
 
