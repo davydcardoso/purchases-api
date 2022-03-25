@@ -4,6 +4,7 @@ import { makeEnsureAuthenticatedMiddleware } from "@/shared/infra/http/factories
 import { Router } from "express";
 import { makeCreateNewPurchaseOrderController } from "../factories/CreateNewPurchaseOrderControllerFactory";
 import { makeGetAllPurchaseOrderController } from "../factories/GetAllPurchaseOrderControllerFactory";
+import { makeGetMyListPurchasesController } from "../factories/GetMyListPurchasesControllerFactory";
 import { makeGetPurchaseOrderController } from "../factories/GetPurchaseOrderControllerFactory";
 
 const purchasesRoutes = Router();
@@ -12,10 +13,9 @@ purchasesRoutes.use(adaptMiddleware(makeEnsureAuthenticatedMiddleware()));
 
 purchasesRoutes.post("/", adaptRoute(makeCreateNewPurchaseOrderController()));
 
-purchasesRoutes.get(
-  "/",
-  adaptRoute(makeGetPurchaseOrderController())
-);
+purchasesRoutes.get("/", adaptRoute(makeGetPurchaseOrderController()));
+
+purchasesRoutes.get("/my-list", adaptRoute(makeGetMyListPurchasesController()));
 
 purchasesRoutes.use(adaptMiddleware(makeEnsureAuthenticatedMiddleware(true)));
 

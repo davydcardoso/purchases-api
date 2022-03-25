@@ -47,8 +47,6 @@ export class CreateNewPurchaseOrderController implements Controller {
         orderComments,
       } = request;
 
-      console.log(request);
-
       const result = await this.createNewPurchaseOrder.perform({
         userId,
         purchaseDate,

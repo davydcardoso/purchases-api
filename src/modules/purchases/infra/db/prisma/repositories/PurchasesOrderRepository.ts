@@ -5,6 +5,7 @@ import { IPurchasesRepository } from "@/modules/purchases/repositories/IPurchase
 import { PurchaseItems } from "@/modules/purchases/domain/entities/purchaseItems/purchaseItems";
 import { PurchasesItemsMappers } from "@/modules/purchases/mappers/PurchasesItemsMappers";
 import { PurchaseAndItemsDTOs } from "@/modules/purchases/dtos/PurchaseOrderAndItemsDTOs";
+import { PurchaseOrderListDTOs } from "@/modules/purchases/dtos/PurchaseOrderListDTOs";
 
 export class PurchasesOrderRepository implements IPurchasesRepository {
   async create(purchaseOrder: PurchaseOrder): Promise<void> {
@@ -55,10 +56,20 @@ export class PurchasesOrderRepository implements IPurchasesRepository {
         },
       },
     });
-    console.log(purchase)
+    console.log(purchase);
 
     return purchase.map((purchase) =>
       PurchasesOrderMappers.toPurchaseAndItemsDto(purchase)
+    );
+  }
+
+  async findPurchaseList(usersId: string): Promise<PurchaseOrderListDTOs[]> {
+    const purchasesOrder = await prisma.purchaseOrder.findMany({
+      where: { usersId },
+    });
+
+    return purchasesOrder.map((purchase) =>
+      PurchasesOrderMappers.toDto(purchase)
     );
   }
 }

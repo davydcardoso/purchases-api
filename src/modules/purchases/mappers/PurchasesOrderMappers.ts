@@ -1,6 +1,7 @@
 import { PurchaseOrder } from "../domain/entities/purchaseOrder/purchaseOrder";
 import { PurchaseOrder as PurchaseOrderPersistence } from "@prisma/client";
 import { PurchaseAndItemsDTOs } from "../dtos/PurchaseOrderAndItemsDTOs";
+import { PurchaseOrderListDTOs } from "../dtos/PurchaseOrderListDTOs";
 
 type PurchaseAndItemsProps = PurchaseOrderPersistence & {
   PurchaseItems: {
@@ -41,5 +42,9 @@ export class PurchasesOrderMappers {
         return { ...items };
       }),
     };
+  }
+
+  static toDto(raw: PurchaseOrderPersistence): PurchaseOrderListDTOs {
+    return { ...raw };
   }
 }
